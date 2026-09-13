@@ -1,37 +1,49 @@
 #!/usr/bin/env python
 # coding: utf-8
+"""Stem and Lollipop Plots with Python and Matplotlib
+
+Author:  Polina Lemenkova
+ORCID:   https://orcid.org/0000-0002-5759-1089
+Archive: https://doi.org/10.13140/RG.2.2.22335.36002
+License: MIT
+
+See README.md for details.
+"""
 import os
-import numpy as np
-import pandas as pd
+
+import matplotlib.artist as martist
 import matplotlib.pylab as pylab
 import matplotlib.pyplot as plt
-import matplotlib.artist as martist
-from matplotlib.offsetbox import AnchoredText
+import numpy as np
+import pandas as pd
 import pylab as plt
+from matplotlib.offsetbox import AnchoredText
 
-os.chdir('/Users/pauline/Documents/Python')
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 df = pd.read_csv("Tab-Morph.csv")
 
 params = {'figure.figsize': (4, 4),
-    'figure.dpi': 300,
-        'font.family': 'Palatino',
-            'axes.labelsize': 8,
-                'xtick.labelsize': 8,
-                    'axes.labelpad': 1,
-                        'lines.markerfacecolor': 'salmon',
-                            'lines.markeredgewidth': .2,
-                                'lines.markersize': 13,
-                                    'lines.linewidth': .5,
-                                        'figure.titlesize': 7,
-                                            'figure.constrained_layout.w_pad': 0.04167
-                                            }
+          'figure.dpi': 300,
+          'font.family': 'Palatino',
+          'axes.labelsize': 8,
+          'xtick.labelsize': 8,
+          'axes.labelpad': 1,
+          'lines.markerfacecolor': 'salmon',
+          'lines.markeredgewidth': .2,
+          'lines.markersize': 13,
+          'lines.linewidth': .5,
+          'figure.titlesize': 7,
+          'figure.constrained_layout.w_pad': 0.04167
+          }
 pylab.rcParams.update(params)
+
 
 def add_at(ax, t, loc=2):
     fp = dict(size=8)
     _at = AnchoredText(t, loc=loc, prop=fp)
     ax.add_artist(_at)
     return _at
+
 
 # define figure
 fig = plt.figure()
@@ -55,7 +67,7 @@ add_at(ax1, "A")
 # subplot 2
 plt.subplot(2, 1, 2)
 ax2 = fig.add_subplot(212)
-df = pd.DataFrame({'group':df.profile, 'values':df.tg_angle})
+df = pd.DataFrame({'group': df.profile, 'values': df.tg_angle})
 ordered_df = df.sort_values(by='values')
 markerline, stemlines, baseline = plt.stem(x, ordered_df['values'])
 plt.setp(markerline, alpha=0.7)
